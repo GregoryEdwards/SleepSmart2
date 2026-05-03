@@ -8,8 +8,9 @@ import com.sleepsmart.app.data.db.entity.SessionEntity
 
 @Database(
     entities = [SessionEntity::class, EpochEntity::class, DisturbanceEntity::class],
-    version = 1,
-    exportSchema = true
+    version = 2,
+    exportSchema = true,
+    autoMigrations = []
 )
 abstract class SleepDatabase : RoomDatabase() {
     abstract fun sessionDao(): SessionDao

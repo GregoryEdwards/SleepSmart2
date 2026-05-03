@@ -80,6 +80,12 @@ class SessionRepository @Inject constructor(
 
     suspend fun disturbanceCountFor(sid: String): Int = disturbanceDao.countForSession(sid)
 
+    suspend fun recentFinished(n: Int): List<SessionEntity> = sessionDao.recentFinished(n)
+
+    suspend fun setJournal(sessionId: String, note: String?) {
+        sessionDao.updateJournal(sessionId, note?.ifBlank { null })
+    }
+
     fun clearLastFinished() { _lastFinishedSessionId.value = null }
 
     /** Build an EpochEntity from runtime values. */

@@ -21,4 +21,10 @@ interface SessionDao {
 
     @Query("SELECT * FROM sessions WHERE id = :id")
     suspend fun byId(id: String): SessionEntity?
+
+    @Query("SELECT * FROM sessions WHERE endedAt IS NOT NULL ORDER BY startedAt DESC LIMIT :n")
+    suspend fun recentFinished(n: Int): List<SessionEntity>
+
+    @Query("UPDATE sessions SET journal = :note WHERE id = :id")
+    suspend fun updateJournal(id: String, note: String?)
 }

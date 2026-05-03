@@ -18,8 +18,11 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -99,12 +102,24 @@ fun MorningReportScreen(
                 style = MaterialTheme.typography.headlineMedium.copy(fontStyle = FontStyle.Italic),
                 color = Purple400
             )
+
+            Spacer(Modifier.height(24.dp))
+
+            JournalCard(
+                value = state.journal,
+                dirty = state.journalDirty,
+                onChange = { viewModel.setJournalDraft(it) },
+                onSave = { viewModel.saveJournal() }
+            )
         }
 
         Spacer(Modifier.height(32.dp))
 
         Button(
-            onClick = onDone,
+            onClick = {
+                viewModel.saveJournal()
+                onDone()
+            },
             colors = ButtonDefaults.buttonColors(
                 containerColor = Purple400,
                 contentColor = Navy950
@@ -112,6 +127,58 @@ fun MorningReportScreen(
             shape = RoundedCornerShape(20.dp),
             modifier = Modifier.fillMaxWidth().height(56.dp)
         ) { Text("Done", style = MaterialTheme.typography.titleLarge) }
+    }
+}
+
+@Composable
+private fun JournalCard(
+    value: String,
+    dirty: Boolean,
+    onChange: (String) -> Unit,
+    onSave: () -> Unit
+) {
+    Surface(
+        color = Navy800,
+        shape = RoundedCornerShape(16.dp),
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        Column(modifier = Modifier.padding(16.dp)) {
+            Text(
+                "Journal",
+                style = MaterialTheme.typography.labelLarge,
+                color = TextMuted
+            )
+            Spacer(Modifier.height(4.dp))
+            OutlinedTextField(
+                value = value,
+                onValueChange = onChange,
+                placeholder = {
+                    Text(
+                        "How did you sleep? One line is enough.",
+                        color = TextMuted
+                    )
+                },
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedBorderColor = Purple400,
+                    unfocusedBorderColor = TextMuted,
+                    focusedTextColor = TextPrimary,
+                    unfocusedTextColor = TextPrimary,
+                    cursorColor = Purple400
+                ),
+                modifier = Modifier.fillMaxWidth()
+            )
+            if (dirty) {
+                Spacer(Modifier.height(4.dp))
+                Row(
+                    horizontalArrangement = Arrangement.End,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    TextButton(onClick = onSave) {
+                        Text("Save", color = Purple400)
+                    }
+                }
+            }
+        }
     }
 }
 

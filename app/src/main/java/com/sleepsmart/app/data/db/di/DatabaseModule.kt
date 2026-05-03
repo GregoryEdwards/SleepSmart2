@@ -12,6 +12,8 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import androidx.room.migration.Migration
+import androidx.sqlite.db.SupportSQLiteDatabase
 import net.sqlcipher.database.SQLiteDatabase
 import net.sqlcipher.database.SupportFactory
 import javax.inject.Singleton
@@ -30,8 +32,15 @@ object DatabaseModule {
         val factory = SupportFactory(key.passphrase())
         return Room.databaseBuilder(context, SleepDatabase::class.java, "sleepsmart.db")
             .openHelperFactory(factory)
+            .addMigrations(MIGRATION_1_2)
             .fallbackToDestructiveMigration()
             .build()
+    }
+
+    private val MIGRATION_1_2 = object : Migration(1, 2) {
+        override fun migrate(db: SupportSQLiteDatabase) {
+            db.execSQL("ALTER TABLE sessions ADD COLUMN journal TEXT")
+        }
     }
 
     @Provides fun provideSessionDao(db: SleepDatabase): SessionDao = db.sessionDao()

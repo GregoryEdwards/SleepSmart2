@@ -13,5 +13,6 @@ data class SessionEntity(
     val firedAt: Long?,
     val score: Int?,
     val timeAsleepMinutes: Int?,
-    val disturbances: Int = 0
+    val disturbances: Int = 0,
+    val journal: String? = null
 )

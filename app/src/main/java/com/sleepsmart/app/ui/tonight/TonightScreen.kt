@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Settings
+import androidx.compose.material.icons.outlined.Timeline
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
@@ -49,6 +50,7 @@ import com.sleepsmart.app.ui.theme.TextPrimary
 fun TonightScreen(
     onTrackingStarted: () -> Unit,
     onOpenSettings: () -> Unit,
+    onOpenTrends: () -> Unit,
     onMissingPermissions: () -> Unit,
     onSessionFinished: (String) -> Unit,
     viewModel: TonightViewModel = hiltViewModel()
@@ -74,6 +76,13 @@ fun TonightScreen(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.End
         ) {
+            IconButton(onClick = onOpenTrends) {
+                Icon(
+                    Icons.Outlined.Timeline,
+                    contentDescription = "Trends",
+                    tint = TextMuted
+                )
+            }
             IconButton(onClick = onOpenSettings) {
                 Icon(
                     Icons.Outlined.Settings,

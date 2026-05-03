@@ -12,6 +12,7 @@ import com.sleepsmart.app.ui.permissions.PermissionsScreen
 import com.sleepsmart.app.ui.settings.SettingsScreen
 import com.sleepsmart.app.ui.tonight.TonightScreen
 import com.sleepsmart.app.ui.tracking.TrackingScreen
+import com.sleepsmart.app.ui.trends.TrendsScreen
 
 object Routes {
     const val PERMISSIONS = "permissions"
@@ -19,6 +20,7 @@ object Routes {
     const val TRACKING = "tracking"
     const val MORNING = "morning/{sessionId}"
     const val SETTINGS = "settings"
+    const val TRENDS = "trends"
 
     fun morning(sessionId: String) = "morning/$sessionId"
 }
@@ -42,12 +44,19 @@ fun AppNav(
             TonightScreen(
                 onTrackingStarted = { navController.navigate(Routes.TRACKING) },
                 onOpenSettings = { navController.navigate(Routes.SETTINGS) },
+                onOpenTrends = { navController.navigate(Routes.TRENDS) },
                 onMissingPermissions = { navController.navigate(Routes.PERMISSIONS) },
                 onSessionFinished = { sid ->
                     navController.navigate(Routes.morning(sid)) {
                         popUpTo(Routes.TONIGHT)
                     }
                 }
+            )
+        }
+        composable(Routes.TRENDS) {
+            TrendsScreen(
+                onBack = { navController.popBackStack() },
+                onSessionTap = { sid -> navController.navigate(Routes.morning(sid)) }
             )
         }
         composable(Routes.TRACKING) {
