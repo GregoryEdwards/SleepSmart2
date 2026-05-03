@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="navy950">#FF050818</color>
+    <color name="navy900">#FF0A0F2C</color>
+    <color name="navy800">#FF111838</color>
+    <color name="navy700">#FF1A224D</color>
+    <color name="purple500">#FF8B5CF6</color>
+    <color name="purple400">#FFA78BFA</color>
+    <color name="purple300">#FFC4B5FD</color>
+</resources>
