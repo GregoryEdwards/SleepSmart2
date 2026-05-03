@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SleepSmart</string>
+    <string name="tracking_notification_channel">Sleep tracking</string>
+    <string name="tracking_notification_title">SleepSmart is tracking your sleep.</string>
+    <string name="tracking_notification_body">Microphone is being used. Tap to view session.</string>
+    <string name="alarm_notification_channel">Alarm</string>
+</resources>
